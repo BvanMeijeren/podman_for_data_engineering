@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: data-lab
+spec:
+  containers:
+    - name: postgres
+      image: docker.io/library/postgres:16
+      env:
+        - name: POSTGRES_USER
+          value: user
+        - name: POSTGRES_PASSWORD
+          value: pass
+        - name: POSTGRES_DB
+          value: mydb
+      ports:
+        - containerPort: 5432
+          hostPort: 5432
+      volumeMounts:
+        - mountPath: /var/lib/postgresql/data
+          name: pgdata
+
+    - name: python
+      image: localhost/data-python:latest
+      command: ["sleep", "infinity"]  # keep container running
+      volumeMounts:
+        - mountPath: /workspace
+          name: workspace
+
+  volumes:
+    - name: pgdata
+      persistentVolumeClaim:
+        claimName: pgdata-pvc
+
+    - name: workspace
+      hostPath:
+        path: .
+        type: Directory
