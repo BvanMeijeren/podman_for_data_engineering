@@ -15,6 +15,5 @@ shell:
 
 logs:
 	podman logs data-lab-python
-
 ps:
 	podman ps --pod

@@ -35,6 +35,19 @@ podman pod start data-lab
 podman pod rm -f data-lab
 podman volume rm pgdata
 
+## Link any directory to an ephemeral container (assumes image is built already)
+podman run -it \
+  -v "$(pwd):/app:z" \
+  -w /app \
+  --name data-lab-python \
+  data-python bash
+
+## Reconnect to the -it when it already runs 
+podman start -ai data-lab-python
+
+## Check bind mounts per container
+podman inspect --format '{{ .Mounts }}' data-lab-python
+
 ## Apply changes and redeploy
 podman pod rm -f data-lab
 podman play kube data-lab.yaml
