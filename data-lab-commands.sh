@@ -5,7 +5,7 @@ PROJECT=$(pwd)
 case "$1" in
   up)
     podman build -t data-python .
-    podman play kube pgdata-pvc.yaml
+    podman play kube pgdata-pvc.yml
     podman play kube data-lab.yml
     ;;
   shell)

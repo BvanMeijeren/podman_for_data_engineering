@@ -2,8 +2,8 @@
 build:
 	podman build -t data-python .
 up:
-	podman play kube pgdata-pvc.yaml
-	podman play kube data-lab.yaml
+	podman play kube pgdata-pvc.yml
+	podman play kube data-lab.yml
 
 down:
 	podman pod rm -f data-lab
